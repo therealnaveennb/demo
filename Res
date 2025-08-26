@@ -1,0 +1,210 @@
+import time
+import os
+import requests
+from msal import ConfidentialClientApplication
+
+
+class SharePoint:
+
+    @staticmethod
+    def create_token():
+        tenant_id = "YOUR_TENANT_ID"
+        client_id = "YOUR_CLIENT_ID"
+        secret = "YOUR_CLIENT_SECRET"
+
+        authority = f"https://login.microsoftonline.com/{tenant_id}"
+        scope = ["https://graph.microsoft.com/.default"]
+
+        app = ConfidentialClientApplication(client_id, authority=authority, client_credential=secret)
+        result = app.acquire_token_for_client(scopes=scope)
+
+        if result.get('access_token'):
+            print("✅ Token acquired")
+            return {'Authorization': 'Bearer ' + result['access_token'], "Content-Type": "application/json"}
+        else:
+            raise Exception(f"❌ Token generation failed: {result}")
+
+    @staticmethod
+    def get_site_and_library_ids(base_url, header):
+        site_name = "test-assist"
+        library_name = "Documents"
+
+        site_url = f"{base_url}/sites?search={site_name}&select=id"
+        site_response = requests.get(site_url, headers=header).json().get('value', [])
+        if not site_response:
+            raise Exception(f"❌ Site '{site_name}' does not exist")
+        site_id = site_response[0]['id']
+
+        list_url = f"{base_url}/sites/{site_id}/lists?$filter=displayName eq '{library_name}'&select=id"
+        response = requests.get(list_url, headers=header).json().get('value', [])
+        if not response:
+            raise Exception(f"❌ Library '{library_name}' does not exist")
+        library_id = response[0]['id']
+
+        return site_id, library_id
+
+    @staticmethod
+    def ensure_folder_exists(base_url, header, site_id, folder_path):
+        """Ensure the folder (and parent) exists in the SharePoint drive"""
+        folder_url = f"{base_url}/sites/{site_id}/drive/root:/{folder_path}"
+        res = requests.get(folder_url, headers=header)
+
+        if res.status_code == 404:  # Folder not found
+            parent_path = '/'.join(folder_path.strip('/').split('/')[:-1])
+            folder_name = folder_path.strip('/').split('/')[-1]
+
+            create_url = (
+                f"{base_url}/sites/{site_id}/drive/root:/{parent_path}:/children"
+                if parent_path else f"{base_url}/sites/{site_id}/drive/root:/children"
+            )
+
+            folder_data = {
+                "name": folder_name,
+                "folder": {},
+                "@microsoft.graph.conflictBehavior": "replace"
+            }
+
+            create_res = requests.post(create_url, headers=header, json=folder_data)
+            if create_res.status_code not in [200, 201]:
+                raise Exception(
+                    f"❌ Failed to create folder '{folder_path}'. "
+                    f"Status: {create_res.status_code}, Response: {create_res.text}"
+                )
+            else:
+                print(f"📁 Folder created: {folder_path}")
+
+    @staticmethod
+    def upload_file(base_url, header, site_id, library_id, file_path, folder_name):
+        # Create the folder if not exists
+        folder_path = folder_name.strip("/")  # no assist/ prefix
+        SharePoint.ensure_folder_exists(base_url, header, site_id, folder_path)
+
+        endpoint = f"{base_url}/sites/{site_id}/lists/{library_id}/drive/root:/{folder_path}"
+        file_size = os.stat(file_path).st_size
+
+        if file_size < 4100000:  # < 4MB
+            return SharePoint.upload(endpoint, header, file_path)
+        else:
+            return SharePoint.session_upload(endpoint, header, file_path)
+
+    @staticmethod
+    def upload(endpoint, header, file_path):
+        with open(file_path, 'rb') as file_data:
+            response = requests.put(
+                f"{endpoint}/{os.path.basename(file_path)}:/content",
+                headers=header,
+                data=file_data
+            )
+        if response.status_code not in [200, 201]:
+            raise Exception(f"❌ Upload failed. Status: {response.status_code}, Response: {response.text}")
+        return response.json()
+
+    @staticmethod
+    def session_upload(endpoint, header, file_path):
+        upload_session = requests.post(
+            f"{endpoint}/{os.path.basename(file_path)}:/createUploadSession",
+            headers=header
+        ).json()
+
+        with open(file_path, 'rb') as f:
+            total_file_size = os.path.getsize(file_path)
+            chunk_size = 327680
+            chunk_number = total_file_size // chunk_size
+            i = 0
+
+            while i <= chunk_number:
+                chunk_data = f.read(chunk_size)
+                if not chunk_data:
+                    break
+
+                start_index = i * chunk_size
+                end_index = start_index + len(chunk_data)
+                headers_chunk = {
+                    'Content-Length': str(len(chunk_data)),
+                    'Content-Range': f'bytes {start_index}-{end_index - 1}/{total_file_size}'
+                }
+
+                time.sleep(1)
+                response = requests.put(upload_session['uploadUrl'], data=chunk_data, headers=headers_chunk)
+                if response.status_code not in [200, 201, 202]:
+                    raise Exception(
+                        f"❌ Chunk upload failed at {start_index}-{end_index}. "
+                        f"Status: {response.status_code}, Response: {response.text}"
+                    )
+                i += 1
+        return response.json()
+
+    @staticmethod
+    def create_sharing_link(base_url, header, site_id, library_id, drive_id, item_id,
+                            emails=None, groups=None, permission_type="view"):
+        email_list = []
+
+        if groups:
+            group_filters = " or ".join([f"displayName eq '{name.strip()}'" for name in groups.split(',')])
+            url = f"{base_url}/groups?$filter={group_filters}&$select=id"
+            group_ids = [g['id'] for g in requests.get(url, headers=header).json().get('value', [])]
+
+            for gid in group_ids:
+                members = requests.get(f"{base_url}/groups/{gid}/members?$select=mail", headers=header).json()
+                for member in members.get('value', []):
+                    if member.get('mail') and member['mail'] not in email_list:
+                        email_list.append(member['mail'])
+
+        if emails:
+            email_list += [e.strip() for e in emails.split(',')]
+
+        recipients = [{"email": e} for e in email_list] if email_list else None
+
+        item_url = f"https://graph.microsoft.com/beta/sites/{site_id}/lists/{library_id}/items/{item_id}/createLink"
+        data = {
+            "type": permission_type,
+            "scope": "users",
+            "recipients": recipients,
+            "retainInheritedPermissions": True
+        }
+        response = requests.post(item_url, headers=header, json=data).json()
+        return response.get('link', {}).get('webUrl', None)
+
+    @staticmethod
+    def upload_and_generate_link(file_name, file_bytes, email=None, folder_name=None, group=None, permission_type="view"):
+        base_url = "https://graph.microsoft.com/v1.0"
+        header = SharePoint.create_token()
+
+        temp_path = f"/tmp/{file_name}"
+        site_id, library_id = SharePoint.get_site_and_library_ids(base_url, header)
+        print("✅ Site and Library IDs fetched")
+
+        with open(temp_path, 'wb') as f:
+            f.write(file_bytes)
+
+        result = SharePoint.upload_file(base_url, header, site_id, library_id, temp_path, folder_name)
+        if not result.get('webUrl'):
+            raise Exception("❌ Upload failed")
+
+        link = SharePoint.create_sharing_link(
+            base_url, header, site_id, library_id,
+            result['parentReference']['driveId'],
+            result['id'], email, group, permission_type
+        )
+        return link or result['webUrl'], email
+
+
+if __name__ == "__main__":
+    file_name = "test_file2.txt"
+    file_content = b"Hello "
+    email = "test@example.com"
+    folder_name = "ParentFolder/ChildFolder"  # nested folder example
+    permission_type = "view"
+
+    print("Running upload_and_generate_link...")
+    try:
+        url, returned_email = SharePoint.upload_and_generate_link(
+            file_name, file_content, email=email,
+            folder_name=folder_name, permission_type=permission_type
+        )
+        print("✅ Test Passed!")
+        print("Generated Link:", url)
+        print("Returned Email:", returned_email)
+    except Exception as e:
+        print("❌ Test Failed!")
+        print("Error:", str(e))
