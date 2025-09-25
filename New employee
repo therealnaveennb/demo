@@ -1,0 +1,55 @@
+from django.db.models import Count, Prefetch, Sum, F, Q
+
+# @require_permissions({'employee': ['list']})
+def get_employees(request):
+    user_email = request.employee
+    user = Employee.objects.select_related("role").get(email__iexact=user_email)
+
+    if user.role.access_level in [Role.AccessLevel.SUPER_ADMIN]:
+        employees = Employee.objects.all()
+        logger.info(f"{user.email} is SUPER_ADMIN. Fetching all employees.")
+    else:
+        employees = Employee.objects.filter(Q(manager=user) | Q(L2_manager=user))
+        logger.info(f"{user.email} is not SUPER_ADMIN. Fetching employees managed by or reporting to them.")
+
+    # 🚀 Prefetch and annotate
+    employees = (
+        employees
+        .select_related("role")
+        .prefetch_related(
+            Prefetch("permissionmapper_set", queryset=PermissionMapper.objects.select_related("service"))
+        )
+        .annotate(
+            total_services=Count("permissionmapper", distinct=True)
+        )
+    )
+
+    # Pagination
+    is_paginated = "page" in request.GET
+    if is_paginated:
+        paginator = CustomPagination()
+        employees_page = paginator.paginate_queryset(employees, request)
+        logger.info(f"Paginated response. Page: {request.GET.get('page')}, Page size: {request.GET.get('page_size')}")
+    else:
+        employees_page = employees
+        logger.info("Non-paginated response. Returning all matching employees.")
+
+    response_data = []
+    for employee in employees_page:
+        employee_data = EmployeeSerializer(employee).data
+
+        # ✅ Use prefetched data → no extra DB queries
+        services = [pm.service.name for pm in employee.permissionmapper_set.all()]
+        employee_data["total_services"] = employee.total_services
+
+        # 🚀 Optional: compute expenses in bulk or cache
+        employee_data["total_expenses"] = get_total_expense(services)
+
+        employee_data["role"] = employee.role.name
+        response_data.append(employee_data)
+
+    logger.info(f"Retrieved {len(response_data)} employees for response.")
+
+    if is_paginated:
+        return paginator.get_paginated_response(response_data)
+    return JsonResponse(response_data, safe=False, status=status.HTTP_200_OK)
