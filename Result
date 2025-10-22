@@ -112,6 +112,114 @@ def main():
                 row[prop_name] = props.get(prop_name, '')
             all_deals.append(row)
 
+    logger.info(f"Total raw deals collected: {len(all_deals)}")
+
+    # Step 2: Identify properties with at least one non-empty value
+    nonempty_properties = set()
+    for row in all_deals:
+        for prop, value in row.items():
+            if prop in ['account', 'dealId']:
+                continue
+            if value not in [None, '', [], {}, 'null']:
+                nonempty_properties.add(prop)
+
+    logger.info(f"Found {len(nonempty_properties)} non-empty properties")
+
+    # Step 3: Write filtered data to CSV
+    fieldnames = ['account', 'dealId'] + sorted(list(nonempty_properties))
+
+    with open('all_deals_filtered.csv', 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for row in all_deals:
+            filtered_row = {k: v for k, v in row.items() if k in fieldnames}
+            writer.writerow(filtered_row)
+
+    logger.info(f"✅ All deals written to all_deals_filtered.csv")
+    logger.info(f"📊 Total deals exported: {len(all_deals)}")
+    logger.info(f"🧹 Empty properties omitted: {len(all_property_names) - len(nonempty_properties)}")
+
+
+if __name__ == "__main__":
+    main()        params = {"limit": 100}
+        if after:
+            params["after"] = after
+
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code != 200:
+            logger.error(f"Failed to fetch deal properties: {response.status_code} - {response.text}")
+            break
+
+        data = response.json()
+        results = data.get("results", [])
+        all_properties.extend([prop["name"] for prop in results])
+
+        paging = data.get("paging", {}).get("next", {}).get("after")
+        if not paging:
+            break
+        after = paging
+
+    logger.info(f"Fetched {len(all_properties)} deal properties from HubSpot")
+    return all_properties
+
+
+def fetch_deals(access_token, properties):
+    """Fetch all deals with the specified properties using CRM v3 API"""
+    deals = []
+    url = "https://api.hubapi.com/crm/v3/objects/deals"
+    headers = {"Authorization": f"Bearer {access_token}"}
+    params = {
+        "limit": 100,
+        "properties": ",".join(properties)
+    }
+
+    while True:
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code != 200:
+            logger.error(f"Failed to fetch deals: {response.status_code} - {response.text}")
+            break
+
+        data = response.json()
+        deals.extend(data.get("results", []))
+
+        paging = data.get("paging", {}).get("next", {}).get("after")
+        if not paging:
+            break
+        params["after"] = paging
+
+    logger.info(f"Fetched {len(deals)} deals from HubSpot")
+    return deals
+
+
+def main():
+    account_profiles = ['hubspot-test', 'hubspot-prod', 'hubspot-marketing']  # 🔧 Add as many as needed
+    all_deals = []
+    all_property_names = set()
+
+    # Step 1: Collect deals + properties for each account
+    for profile in account_profiles:
+        access_token = getconfig(profile, 'access_token')
+        if not access_token:
+            logger.warning(f"No access token found for profile: {profile}")
+            continue
+
+        logger.info(f"Fetching deal properties for profile: {profile}")
+        deal_properties = get_deal_properties(access_token)
+
+        logger.info(f"Fetching deals for profile: {profile}")
+        deals = fetch_deals(access_token, deal_properties)
+
+        # Record property names for CSV header
+        all_property_names.update(deal_properties)
+
+        for deal in deals:
+            props = deal.get('properties', {})
+            row = {'account': profile, 'dealId': deal.get('id', '')}
+            for prop_name in deal_properties:
+                row[prop_name] = props.get(prop_name, '')
+            all_deals.append(row)
+
     # Step 2: Write everything into CSV
     fieldnames = ['account', 'dealId'] + sorted(list(all_property_names))
 
