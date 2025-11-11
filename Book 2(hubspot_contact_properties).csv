@@ -1,0 +1,274 @@
+name,label,type,fieldType,groupName
+hs_analytics_average_page_views,Average Pageviews,number,number,analyticsinformation
+hs_analytics_first_referrer,First Referring Site,string,text,analyticsinformation
+hs_analytics_first_timestamp,Time First Seen,datetime,date,analyticsinformation
+hs_analytics_first_touch_converting_campaign,First Touch Converting Campaign,string,text,analyticsinformation
+hs_analytics_first_url,First Page Seen,string,text,analyticsinformation
+hs_analytics_first_visit_timestamp,Time of First Session,datetime,date,analyticsinformation
+hs_analytics_last_referrer,Last Referring Site,string,text,analyticsinformation
+hs_analytics_last_timestamp,Time Last Seen,datetime,date,analyticsinformation
+hs_analytics_last_touch_converting_campaign,Last Touch Converting Campaign,string,text,analyticsinformation
+hs_analytics_last_url,Last Page Seen,string,text,analyticsinformation
+hs_analytics_last_visit_timestamp,Time of Last Session,datetime,date,analyticsinformation
+hs_analytics_num_event_completions,Number of event completions,number,number,analyticsinformation
+hs_analytics_num_page_views,Number of Pageviews,number,number,analyticsinformation
+hs_analytics_num_visits,Number of Sessions,number,number,analyticsinformation
+hs_analytics_revenue,Event Revenue,number,number,analyticsinformation
+hs_analytics_source,Original Traffic Source,enumeration,select,analyticsinformation
+hs_analytics_source_data_1,Original Traffic Source Drill-Down 1,string,text,analyticsinformation
+hs_analytics_source_data_2,Original Traffic Source Drill-Down 2,string,text,analyticsinformation
+hs_latest_source,Latest Traffic Source,enumeration,select,analyticsinformation
+hs_latest_source_data_1,Latest Traffic Source Drill-Down 1,string,text,analyticsinformation
+hs_latest_source_data_2,Latest Traffic Source Drill-Down 2,string,text,analyticsinformation
+hs_latest_source_timestamp,Latest Traffic Source Date,datetime,date,analyticsinformation
+currentlyinworkflow,Currently in workflow (discontinued),enumeration,booleancheckbox,contact_activity
+engagements_last_meeting_booked,Date of last meeting booked in meetings tool,datetime,date,contact_activity
+engagements_last_meeting_booked_campaign,Campaign of last booking in meetings tool,string,text,contact_activity
+engagements_last_meeting_booked_medium,Medium of last booking in meetings tool,string,text,contact_activity
+engagements_last_meeting_booked_source,Source of last booking in meetings tool,string,text,contact_activity
+first_conversion_date,First Conversion Date,datetime,date,contact_activity
+first_conversion_event_name,First Conversion,string,text,contact_activity
+hs_content_membership_notes,Membership Notes,string,textarea,contact_activity
+hs_content_membership_status,Status,enumeration,select,contact_activity
+hs_last_sales_activity_timestamp,Last Engagement Date,datetime,date,contact_activity
+hs_sales_email_last_clicked,Recent Sales Email Clicked Date,datetime,date,contact_activity
+hs_sales_email_last_opened,Recent Sales Email Opened Date,datetime,date,contact_activity
+hs_sales_email_last_replied,Recent Sales Email Replied Date,datetime,date,contact_activity
+hs_sequences_is_enrolled,Currently in Sequence,bool,booleancheckbox,contact_activity
+message,Message,string,textarea,contact_activity
+notes_last_contacted,Last Contacted,datetime,date,contact_activity
+notes_last_updated,Last Activity Date,datetime,date,contact_activity
+notes_next_activity_date,Next Activity Date,datetime,date,contact_activity
+num_contacted_notes,Number of times contacted,number,number,contact_activity
+num_notes,Number of Sales Activities,number,number,contact_activity
+address,Street Address,string,text,contactinformation
+annualrevenue,Annual Revenue,string,text,contactinformation
+associatedcompanyid,Primary Associated Company ID,number,number,contactinformation
+associatedcompanylastupdated,Associated Company Last Updated,number,number,contactinformation
+city,City,string,text,contactinformation
+company,Company Name,string,text,contactinformation
+country,Country/Region,string,text,contactinformation
+createdate,Create Date,datetime,date,contactinformation
+email,Email,string,text,contactinformation
+fax,Fax Number,string,phonenumber,contactinformation
+firstname,First Name,string,text,contactinformation
+hs_additional_emails,Additional email addresses,enumeration,select,contactinformation
+hs_all_accessible_team_ids,All teams,enumeration,select,contactinformation
+hs_all_contact_vids,All vids for a contact,enumeration,select,contactinformation
+hs_all_owner_ids,All owner IDs,enumeration,select,contactinformation
+hs_all_team_ids,All team IDs,enumeration,select,contactinformation
+hs_associated_target_accounts,Associated Target Accounts,number,calculation_rollup,contactinformation
+hs_avatar_filemanager_key,Avatar FileManager key,string,text,contactinformation
+hs_calculated_form_submissions,The 800 most recent form submissions for a contact,enumeration,select,contactinformation
+hs_calculated_merged_vids,Merged vids with timestamps of a contact,enumeration,select,contactinformation
+hs_calculated_mobile_number,Calculated Mobile Number in International Format,string,text,contactinformation
+hs_calculated_phone_number,Calculated Phone Number in International Format,string,text,contactinformation
+hs_calculated_phone_number_area_code,Calculated Phone Number Area Code,string,text,contactinformation
+hs_calculated_phone_number_country_code,Calculated Phone Number Country Code,string,text,contactinformation
+hs_calculated_phone_number_region_code,Calculated Phone Number Region,string,text,contactinformation
+hs_contact_enrichment_opt_out,Enrichment opt out,bool,booleancheckbox,contactinformation
+hs_contact_enrichment_opt_out_timestamp,Enrichment opt out timestamp,datetime,date,contactinformation
+hs_content_membership_email,Member email,string,text,contactinformation
+hs_content_membership_email_confirmed,Email Confirmed,bool,booleancheckbox,contactinformation
+hs_content_membership_follow_up_enqueued_at,Time enrolled in registration follow up emails,datetime,date,contactinformation
+hs_content_membership_registered_at,Registered At,datetime,date,contactinformation
+hs_content_membership_registration_domain_sent_to,Domain to which registration email was sent,string,text,contactinformation
+hs_content_membership_registration_email_sent_at,Time registration email was sent,datetime,date,contactinformation
+hs_conversations_visitor_email,Conversations visitor email,string,text,contactinformation
+hs_count_is_unworked,Count of unengaged contacts,number,calculation_equation,contactinformation
+hs_count_is_worked,Count of engaged contacts,number,calculation_equation,contactinformation
+hs_country_region_code,Country/Region Code,string,text,contactinformation
+hs_created_by_conversations,Created By Conversations,bool,booleancheckbox,contactinformation
+hs_created_by_user_id,Created by user ID,number,number,contactinformation
+hs_createdate,Object create date/time,datetime,date,contactinformation
+hs_document_last_revisited,Recent Document Revisit Date,datetime,date,contactinformation
+hs_email_domain,Email Domain,string,text,contactinformation
+hs_first_engagement_object_id,ID of first engagement,number,number,contactinformation
+hs_first_outreach_date,First outreach date,datetime,date,contactinformation
+hs_first_subscription_create_date,First subscription create date,datetime,calculation_rollup,contactinformation
+hs_full_name_or_email,Full name or email,string,calculation_equation,contactinformation
+hs_has_active_subscription,Contact has an active subscription,number,calculation_rollup,contactinformation
+hs_inferred_language_codes,Inferred Language Codes,enumeration,select,contactinformation
+hs_intent_paid_up_to_date,Intent paid up to date,date,date,contactinformation
+hs_intent_signals_enabled,Intent Signals active,bool,booleancheckbox,contactinformation
+hs_is_contact,Is a contact,bool,calculation_read_time,contactinformation
+hs_is_enriched,Has been enriched,bool,booleancheckbox,contactinformation
+hs_language,Preferred language,enumeration,select,contactinformation
+hs_last_metered_enrichment_timestamp,Last Metered Enrichment Timestamp,datetime,date,contactinformation
+hs_last_sales_activity_date,last sales activity date old,datetime,date,contactinformation
+hs_last_sales_activity_type,Last Engagement Type,enumeration,select,contactinformation
+hs_lastmodifieddate,Object last modified date/time,datetime,date,contactinformation
+hs_latest_disqualified_lead_date,Latest Disqualified Lead Date,datetime,calculation_rollup,contactinformation
+hs_latest_meeting_activity,Latest meeting activity,datetime,date,contactinformation
+hs_latest_open_lead_date,Latest Open Lead Date,datetime,calculation_rollup,contactinformation
+hs_latest_qualified_lead_date,Latest Qualified Lead Date,datetime,calculation_rollup,contactinformation
+hs_latest_sequence_ended_date,Last sequence ended date,datetime,date,contactinformation
+hs_latest_sequence_enrolled,Last sequence enrolled,number,number,contactinformation
+hs_latest_sequence_enrolled_date,Last sequence enrolled date,datetime,date,contactinformation
+hs_latest_sequence_finished_date,Last sequence finished date,datetime,date,contactinformation
+hs_latest_sequence_unenrolled_date,Last sequence unenrolled date,datetime,date,contactinformation
+hs_latest_subscription_create_date,Latest subscription create date,datetime,calculation_rollup,contactinformation
+hs_live_enrichment_deadline,Live enrichment deadline,datetime,date,contactinformation
+hs_manual_campaign_ids,Manual campaign ids,number,calculation_rollup,contactinformation
+hs_membership_last_private_content_access_date,Membership last private content access date,datetime,date,contactinformation
+hs_merged_object_ids,Merged Contact IDs,enumeration,checkbox,contactinformation
+hs_mobile_sdk_push_tokens,Mobile Sdk Push Tokens,string,text,contactinformation
+hs_notes_last_activity,Last Activity,object_coordinates,text,contactinformation
+hs_notes_next_activity,Next Activity,object_coordinates,text,contactinformation
+hs_notes_next_activity_type,Next Activity Type,enumeration,select,contactinformation
+hs_object_id,Record ID,number,number,contactinformation
+hs_object_source,Record creation source,string,text,contactinformation
+hs_object_source_detail_1,Record source detail 1,string,text,contactinformation
+hs_object_source_detail_2,Record source detail 2,string,text,contactinformation
+hs_object_source_detail_3,Record source detail 3,string,text,contactinformation
+hs_object_source_id,Record creation source ID,string,text,contactinformation
+hs_object_source_label,Record source,enumeration,select,contactinformation
+hs_object_source_user_id,Record creation source user ID,number,number,contactinformation
+hs_owning_teams,Owning Teams,enumeration,checkbox,contactinformation
+hs_persona,Persona,enumeration,select,contactinformation
+hs_pinned_engagement_id,Pinned engagement ID,number,number,contactinformation
+hs_pipeline,Pipeline,enumeration,select,contactinformation
+hs_prospecting_agent_actively_enrolled_count,Prospecting Agent Actively Enrolled Count,number,calculation_rollup,contactinformation
+hs_prospecting_agent_last_enrolled,Prospecting Agent Last Enrolled,datetime,calculation_rollup,contactinformation
+hs_prospecting_agent_total_enrolled_count,Prospecting Agent Total Enrolled Count,number,calculation_rollup,contactinformation
+hs_read_only,Read only object,bool,booleancheckbox,contactinformation
+hs_registration_method,Registration Method,string,text,contactinformation
+hs_role,Employment Role,enumeration,select,contactinformation
+hs_sa_first_engagement_date,Date of first engagement,datetime,date,contactinformation
+hs_sa_first_engagement_descr,Description of first engagement,enumeration,select,contactinformation
+hs_sa_first_engagement_object_type,Type of first engagement,enumeration,select,contactinformation
+hs_searchable_calculated_international_mobile_number,Calculated Mobile Number with country code,phone_number,phonenumber,contactinformation
+hs_searchable_calculated_international_phone_number,Calculated Phone Number with country code,phone_number,phonenumber,contactinformation
+hs_searchable_calculated_mobile_number,Calculated Mobile Number without country code,phone_number,phonenumber,contactinformation
+hs_searchable_calculated_phone_number,Calculated Phone Number without country code,phone_number,phonenumber,contactinformation
+hs_seniority,Employment Seniority,enumeration,select,contactinformation
+hs_sequences_actively_enrolled_count,Number of sequences actively enrolled,number,number,contactinformation
+hs_sequences_enrolled_count,Number of sequences enrolled,number,number,contactinformation
+hs_state_code,State/Region Code,string,text,contactinformation
+hs_sub_role,Employment Sub Role,enumeration,select,contactinformation
+hs_testpurge,testpurge,string,text,contactinformation
+hs_testrollback,testrollback,string,text,contactinformation
+hs_time_to_first_engagement,Lead response time,number,number,contactinformation
+hs_timezone,Time Zone,enumeration,select,contactinformation
+hs_unique_creation_key,Unique creation key,string,text,contactinformation
+hs_updated_by_user_id,Updated by user ID,number,number,contactinformation
+hs_user_ids_of_all_notification_followers,User IDs of all notification followers,enumeration,checkbox,contactinformation
+hs_user_ids_of_all_notification_unfollowers,User IDs of all notification unfollowers,enumeration,checkbox,contactinformation
+hs_user_ids_of_all_owners,User IDs of all owners,enumeration,checkbox,contactinformation
+hs_was_imported,Performed in an import,bool,booleancheckbox,contactinformation
+hs_whatsapp_phone_number,WhatsApp Phone Number,string,phonenumber,contactinformation
+industry,Industry,string,text,contactinformation
+jobtitle,Job Title,string,text,contactinformation
+lastmodifieddate,Last Modified Date,datetime,date,contactinformation
+lastname,Last Name,string,text,contactinformation
+lifecyclestage,Lifecycle Stage,enumeration,radio,contactinformation
+mobilephone,Mobile Phone Number,string,phonenumber,contactinformation
+numemployees,Number of Employees,enumeration,select,contactinformation
+phone,Phone Number,string,phonenumber,contactinformation
+salutation,Salutation,string,text,contactinformation
+state,State/Region,string,text,contactinformation
+surveymonkeyeventlastupdated,SurveyMonkey Event Last Updated,number,number,contactinformation
+twitterhandle,Twitter Username,string,text,contactinformation
+webinareventlastupdated,Webinar Event Last Updated,number,number,contactinformation
+website,Website URL,string,text,contactinformation
+zip,Postal Code,string,text,contactinformation
+hs_v2_date_entered_customer,"Date entered ""Customer (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_evangelist,"Date entered ""Evangelist (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_lead,"Date entered ""Lead (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_marketingqualifiedlead,"Date entered ""Marketing Qualified Lead (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_opportunity,"Date entered ""Opportunity (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_other,"Date entered ""Other (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_salesqualifiedlead,"Date entered ""Sales Qualified Lead (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_entered_subscriber,"Date entered ""Subscriber (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_customer,"Date exited ""Customer (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_evangelist,"Date exited ""Evangelist (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_lead,"Date exited ""Lead (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_marketingqualifiedlead,"Date exited ""Marketing Qualified Lead (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_opportunity,"Date exited ""Opportunity (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_other,"Date exited ""Other (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_salesqualifiedlead,"Date exited ""Sales Qualified Lead (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_v2_date_exited_subscriber,"Date exited ""Subscriber (Lifecycle Stage Pipeline)""",datetime,date,contactlcs
+hs_membership_has_accessed_private_content,Member has accessed private content,number,calculation_equation,contactscripted
+hs_registered_member,Registered member,number,calculation_equation,contactscripted
+hs_clicked_linkedin_ad,Clicked on a LinkedIn Ad,enumeration,booleancheckbox,conversioninformation
+hs_facebook_ad_clicked,Clicked Facebook ad,bool,booleancheckbox,conversioninformation
+hs_facebook_click_id,Facebook click id,string,text,conversioninformation
+hs_google_click_id,Google ad click id,string,text,conversioninformation
+hs_ip_timezone,IP Timezone,string,text,conversioninformation
+hs_linkedin_ad_clicked,Clicked LinkedIn Ad,enumeration,booleancheckbox,conversioninformation
+ip_city,IP City,string,text,conversioninformation
+ip_country,IP Country,string,text,conversioninformation
+ip_country_code,IP Country Code,string,text,conversioninformation
+ip_latlon,IP Latitude & Longitude,string,text,conversioninformation
+ip_state,IP State/Region,string,text,conversioninformation
+ip_state_code,IP State Code/Region Code,string,text,conversioninformation
+ip_zipcode,IP Zipcode,string,text,conversioninformation
+num_conversion_events,Number of Form Submissions,number,number,conversioninformation
+num_unique_conversion_events,Number of Unique Forms Submitted,number,number,conversioninformation
+recent_conversion_date,Recent Conversion Date,datetime,date,conversioninformation
+recent_conversion_event_name,Recent Conversion,string,text,conversioninformation
+closedate,Close Date,datetime,date,deal_information
+days_to_close,Days To Close,number,number,deal_information
+first_deal_created_date,First Deal Created Date,datetime,date,deal_information
+hs_buying_role,Buying Role,enumeration,checkbox,deal_information
+num_associated_deals,Number of Associated Deals,number,calculation_rollup,deal_information
+recent_deal_amount,Recent Deal Amount,number,number,deal_information
+recent_deal_close_date,Recent Deal Close Date,datetime,date,deal_information
+total_revenue,Total Revenue,number,number,deal_information
+hs_email_bad_address,Invalid email address,bool,booleancheckbox,emailinformation
+hs_email_bounce,Marketing emails bounced,number,number,emailinformation
+hs_email_click,Marketing emails clicked,number,number,emailinformation
+hs_email_customer_quarantined_reason,Email address quarantine reason,enumeration,select,emailinformation
+hs_email_delivered,Marketing emails delivered,number,number,emailinformation
+hs_email_first_click_date,First marketing email click date,datetime,date,emailinformation
+hs_email_first_open_date,First marketing email open date,datetime,date,emailinformation
+hs_email_first_reply_date,First marketing email reply date,datetime,date,emailinformation
+hs_email_first_send_date,First marketing email send date,datetime,date,emailinformation
+hs_email_hard_bounce_reason,Email hard bounce reason,string,text,emailinformation
+hs_email_hard_bounce_reason_enum,Email hard bounce reason,enumeration,radio,emailinformation
+hs_email_is_ineligible,Is globally ineligible,bool,booleancheckbox,emailinformation
+hs_email_last_click_date,Last marketing email click date,datetime,date,emailinformation
+hs_email_last_email_name,Last marketing email name,string,text,emailinformation
+hs_email_last_open_date,Last marketing email open date,datetime,date,emailinformation
+hs_email_last_reply_date,Last marketing email reply date,datetime,date,emailinformation
+hs_email_last_send_date,Last marketing email send date,datetime,date,emailinformation
+hs_email_open,Marketing emails opened,number,number,emailinformation
+hs_email_optout,Unsubscribed from all email,bool,booleancheckbox,emailinformation
+hs_email_optout_1083194576,Opted out of email: Marketing Information,enumeration,booleancheckbox,emailinformation
+hs_email_optout_1083194579,Opted out of email: One to One,enumeration,booleancheckbox,emailinformation
+hs_email_quarantined,Email Address Quarantined,bool,booleancheckbox,emailinformation
+hs_email_quarantined_reason,Email address automated quarantine reason,enumeration,select,emailinformation
+hs_email_replied,Marketing emails replied,number,number,emailinformation
+hs_email_sends_since_last_engagement,Sends Since Last Engagement,number,number,emailinformation
+hs_emailconfirmationstatus,Marketing email confirmation status,enumeration,select,emailinformation
+hs_enriched_email_bounce_detected,Enriched Email Bounce Detected (Deprecated),bool,booleancheckbox,emailinformation
+hs_legal_basis,Legal basis for processing contact's data,enumeration,checkbox,emailinformation
+hs_messaging_engagement_score,messaging_engagement_score,number,number,emailinformation
+hs_quarantined_emails,Quarantined Emails,string,textarea,emailinformation
+company_size,Company size,string,text,facebook_ads_properties
+date_of_birth,Date of birth,string,text,facebook_ads_properties
+degree,Degree,string,text,facebook_ads_properties
+field_of_study,Field of study,string,text,facebook_ads_properties
+gender,Gender,string,text,facebook_ads_properties
+graduation_date,Graduation date,string,text,facebook_ads_properties
+job_function,Job function,string,text,facebook_ads_properties
+marital_status,Marital Status,string,text,facebook_ads_properties
+military_status,Military status,string,text,facebook_ads_properties
+relationship_status,Relationship Status,string,text,facebook_ads_properties
+school,School,string,text,facebook_ads_properties
+seniority,Seniority,string,text,facebook_ads_properties
+start_date,Start date,string,text,facebook_ads_properties
+work_email,Work email,string,text,facebook_ads_properties
+hs_cross_sell_opportunity,Cross-sell Opportunity,bool,booleancheckbox,multiaccountmanagement
+hs_first_closed_order_id,First Closed Order ID,number,number,order_information
+hs_first_order_closed_date,First Order Closed Date,datetime,date,order_information
+hs_recent_closed_order_date,Recent Closed Order Date,datetime,date,order_information
+hs_is_unworked,Contact unworked,bool,calculation_equation,sales_properties
+hs_lead_status,Lead Status,enumeration,radio,sales_properties
+hubspot_owner_assigneddate,Owner assigned date,datetime,date,sales_properties
+hubspot_owner_id,Contact owner,enumeration,select,sales_properties
+hubspot_team_id,HubSpot Team,enumeration,select,sales_properties
+hubspotscore,HubSpot Score,number,calculation_score,sales_properties
+hs_last_sms_send_date,Last Sms Send Date,datetime,date,smsinformation
+hs_last_sms_send_name,Last SMS Send Name,string,text,smsinformation
+hs_linkedin_url,LinkedIn URL,string,text,socialmediainformation
